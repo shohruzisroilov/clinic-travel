@@ -1,88 +1,81 @@
 "use client";
 
-import { Eye, Award, Network, MessageCircle, Smartphone, Wallet } from "lucide-react";
+import { ShieldCheck, BarChart3, Globe, MessageSquare } from "lucide-react";
+import { useLang } from "@/lib/i18n";
 
-const reasons = [
-  {
-    icon: <Eye className="w-5 h-5" />,
-    title: "Shaffof va xolis",
-    description: "Hech qanday yashirin to'lov yoki reklama yo'q. Faqat haqiqiy ma'lumot va real tahlil.",
-  },
-  {
-    icon: <Award className="w-5 h-5" />,
-    title: "Tajribali jamoa",
-    description: "Tibbiy turizm sohasida yillar davomida ishlagan mutaxassislar jamoasi.",
-  },
-  {
-    icon: <Network className="w-5 h-5" />,
-    title: "Keng tarmoq",
-    description: "Turkiya, Germaniya, Koreya, Hindiston va boshqa 10+ mamlakatdagi klinikalar bilan aloqa.",
-  },
-  {
-    icon: <MessageCircle className="w-5 h-5" />,
-    title: "Real fikrlar",
-    description: "Davolanib qaytgan bemorlarning haqiqiy tajribalari va video sharhlari.",
-  },
-  {
-    icon: <Smartphone className="w-5 h-5" />,
-    title: "Doimiy aloqa",
-    description: "Telegram orqali 24/7 maslahat va yordam. Hech qachon yolg'iz qoldirmaymiz.",
-  },
-  {
-    icon: <Wallet className="w-5 h-5" />,
-    title: "Tejamkor yechim",
-    description: "Eng yaxshi narx-sifat nisbatini topishga yordam beramiz.",
-  },
-];
+const featureIcons = [ShieldCheck, BarChart3, Globe, MessageSquare];
+const statsNumbers = ["200+", "5 000+", "14"];
 
 export default function WhyUs() {
+  const { t } = useLang();
+
   return (
-    <section id="why-us" className="py-24 bg-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="py-20 bg-slate-50 border-t border-slate-200">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
 
-          {/* Left */}
-          <div className="lg:sticky lg:top-24">
-            <p className="text-emerald-600 text-sm font-medium mb-3">Nima uchun biz?</p>
-            <h2 className="text-4xl font-extrabold text-gray-900 mb-5">
-              Nima uchun Clinic Travel ni tanlashadi?
-            </h2>
-            <p className="text-gray-500 text-lg leading-relaxed mb-10">
-              Xorijda davolanish — bu katta qaror. Biz shu qarorni to&apos;g&apos;ri qabul
-              qilishingizga yordam beramiz.
-            </p>
+          {/* Left — founder */}
+          <div>
+            <p className="text-xs font-semibold text-green-600 uppercase tracking-wider mb-3">{t.about.sectionLabel}</p>
+            <h2 className="text-2xl font-bold text-slate-900 mb-5">{t.about.title}</h2>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-4">
-              {[
-                { number: "501+", label: "Ishonchli mijoz" },
-                { number: "10+", label: "Mamlakat" },
-                { number: "100%", label: "Shaffoflik" },
-              ].map((stat) => (
-                <div key={stat.label} className="border border-gray-200 rounded-xl p-4">
-                  <p className="text-2xl font-extrabold text-gray-900">{stat.number}</p>
-                  <p className="text-gray-400 text-xs mt-1">{stat.label}</p>
+            <div className="border-l-4 border-green-600 pl-6 mb-8">
+              <blockquote className="text-slate-700 text-base leading-relaxed">
+                &ldquo;{t.about.quote}&rdquo;
+              </blockquote>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 bg-slate-200 flex items-center justify-center flex-shrink-0">
+                <svg className="w-7 h-7 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" strokeLinecap="round" strokeLinejoin="round" />
+                  <circle cx="12" cy="7" r="4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <div>
+                <p className="font-bold text-slate-900 text-sm">{t.about.founderName}</p>
+                <p className="text-slate-500 text-xs mt-0.5">{t.about.founderRole}</p>
+                <div className="flex gap-2 mt-2">
+                  {t.about.tags.map(tag => (
+                    <span key={tag} className="text-[11px] border border-slate-200 text-slate-500 px-2 py-0.5 font-medium">
+                      {tag}
+                    </span>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
           </div>
 
-          {/* Right */}
-          <div className="space-y-3">
-            {reasons.map((reason) => (
-              <div
-                key={reason.title}
-                className="flex items-start gap-4 p-5 border border-gray-100 rounded-xl hover:border-emerald-200 hover:bg-emerald-50/30 transition-all duration-200 group"
-              >
-                <div className="w-9 h-9 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-100 group-hover:text-emerald-600 transition-colors">
-                  {reason.icon}
+          {/* Right — features */}
+          <div>
+            <p className="text-xs font-semibold text-green-600 uppercase tracking-wider mb-3">{t.about.whyLabel}</p>
+            <h2 className="text-2xl font-bold text-slate-900 mb-6">{t.about.whyTitle}</h2>
+
+            <div className="space-y-0 border border-slate-200">
+              {t.about.features.map((f, i) => {
+                const Icon = featureIcons[i];
+                return (
+                  <div key={f.title} className={`flex items-start gap-4 p-5 ${i < t.about.features.length - 1 ? "border-b border-slate-200" : ""} hover:bg-white transition-colors`}>
+                    <div className="w-9 h-9 bg-green-50 border border-green-100 flex items-center justify-center flex-shrink-0">
+                      <Icon className="w-4 h-4 text-green-600" strokeWidth={1.5} />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-slate-900 mb-0.5">{f.title}</p>
+                      <p className="text-sm text-slate-500 leading-relaxed">{f.desc}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="grid grid-cols-3 gap-0 border border-slate-200 border-t-0">
+              {statsNumbers.map((n, i) => (
+                <div key={i} className={`px-5 py-4 ${i < 2 ? "border-r border-slate-200" : ""}`}>
+                  <p className="text-xl font-bold text-slate-900">{n}</p>
+                  <p className="text-xs text-slate-500 mt-0.5">{t.about.statsLabels[i]}</p>
                 </div>
-                <div>
-                  <h3 className="text-gray-900 font-semibold text-sm mb-1">{reason.title}</h3>
-                  <p className="text-gray-500 text-sm leading-relaxed">{reason.description}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>

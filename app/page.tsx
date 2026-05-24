@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
+import Ratings from "@/components/Ratings";
 import WhyUs from "@/components/WhyUs";
 import Process from "@/components/Process";
 import Testimonials from "@/components/Testimonials";
@@ -9,10 +10,11 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#0a0f1e] overflow-x-hidden">
+    <main className="min-h-screen bg-white overflow-x-hidden">
       <Navbar />
       <Hero />
       <Services />
+      <Ratings />
       <WhyUs />
       <Process />
       <Testimonials />

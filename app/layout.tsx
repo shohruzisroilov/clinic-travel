@@ -1,11 +1,21 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
+import { LangProvider } from "@/lib/i18n";
+
+const inter = Inter({
+  subsets: ["latin", "cyrillic"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
-  title: "Clinic Travel — Medical Travel Clinic | Sog'lik va Safar",
+  title: "Clinic Travel — Tibbiy Turizm va Reytinglar Platformasi",
   description:
-    "Davolanish bo'yicha yo'l ko'rsatamiz. Klinikalarni tahlil qilamiz — shaffof va xolis. Real intervyular, maslahatlar, bloglar.",
-  keywords: "clinic travel, medical travel, davolanish, klinika, tibbiy turizm, uzbekistan",
+    "O'zbekistonning eng yaxshi klinikalari reytingi. Kafolatlangan yo'llanmalar, shaffof reyting va haqiqiy bemorlar sharhlari asosida tanlov qiling.",
+  keywords:
+    "clinic travel, tibbiy turizm, klinika reytingi, uzbekistan klinikalar, davolanish, kardiologiya, ortopediya, EKO",
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
   },
@@ -13,21 +23,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="uz">
-      <head>
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="antialiased bg-white text-gray-900">{children}</body>
+    <html lang="uz" className={inter.variable}>
+      <body className={`${inter.className} antialiased bg-white text-gray-900`}>
+        <LangProvider>{children}</LangProvider>
+      </body>
     </html>
   );
 }

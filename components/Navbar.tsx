@@ -1,109 +1,168 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { useLang, type Lang } from "@/lib/i18n";
 
-const navLinks = [
-  { label: "Bosh sahifa", href: "#hero" },
-  { label: "Xizmatlar", href: "#services" },
-  { label: "Nima uchun biz?", href: "#why-us" },
-  { label: "Jarayon", href: "#process" },
-  { label: "Aloqa", href: "#contact" },
-];
+const languages: Lang[] = ["UZ", "RU", "EN"];
 
 export default function Navbar() {
+  const { lang, setLang, t } = useLang();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const navLinks = [
+    { label: t.nav.clinics, href: "#clinics" },
+    { label: t.nav.ratings, href: "#ratings" },
+    { label: t.nav.tours, href: "#services" },
+    { label: t.nav.about, href: "#about" },
+    { label: t.nav.contact, href: "#contact" },
+  ];
+
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-sm shadow-gray-100/80"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
+      scrolled ? "bg-white border-b border-slate-200 shadow-sm" : "bg-white border-b border-slate-100"
+    }`}>
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex items-center justify-between h-14 gap-4">
+
           {/* Logo */}
-          <a href="#hero" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
-              <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <circle cx="12" cy="12" r="9" />
-                <path d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18" />
+          <a href="#hero" className="flex items-center gap-2.5 flex-shrink-0">
+            <div className="w-7 h-7 bg-green-600 flex items-center justify-center flex-shrink-0">
+              <svg className="w-4 h-4 text-white" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7 4h2v3h3v2H9v3H7V9H4V7h3V4z"/>
               </svg>
             </div>
-            <div className="leading-none">
-              <span className="font-bold text-gray-900 text-sm tracking-wide">CLINIC</span>
-              <span className="font-bold text-emerald-600 text-sm tracking-wide"> TRAVEL</span>
+            <div className="flex items-baseline gap-1 flex-shrink-0">
+              <span className="font-bold text-slate-900 text-sm">Clinic</span>
+              <span className="font-bold text-green-600 text-sm">Travel</span>
             </div>
           </a>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-7">
+          <div className="hidden xl:flex items-center gap-0.5 flex-1 justify-center">
             {navLinks.map((link) => (
               <a
-                key={link.href}
+                key={link.label}
                 href={link.href}
-                className="text-gray-500 hover:text-gray-900 text-sm font-medium transition-colors duration-200"
+                className="px-3 py-2 text-slate-600 hover:text-slate-900 hover:bg-slate-50 text-[13px] font-medium transition-colors whitespace-nowrap"
               >
                 {link.label}
               </a>
             ))}
           </div>
 
-          {/* CTA */}
-          <div className="hidden md:flex">
+          {/* Right — desktop */}
+          <div className="hidden xl:flex items-center gap-2 flex-shrink-0">
+            <div className="flex items-center border border-slate-200 overflow-hidden">
+              {languages.map((l, i) => (
+                <button
+                  key={l}
+                  onClick={() => setLang(l)}
+                  aria-label={`Switch language to ${l}`}
+                  aria-pressed={lang === l}
+                  className={`px-2.5 py-1.5 text-xs font-semibold transition-colors ${
+                    i < languages.length - 1 ? "border-r border-slate-200" : ""
+                  } ${lang === l ? "bg-green-600 text-white" : "text-slate-500 hover:bg-slate-50"}`}
+                >
+                  {l}
+                </button>
+              ))}
+            </div>
             <a
-              href="tel:+998330033033"
-              className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+              href="#contact"
+              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 text-[13px] font-semibold transition-colors whitespace-nowrap"
             >
-              <Phone className="w-3.5 h-3.5" />
-              Bog&apos;lanish
+              {t.nav.cta}
             </a>
           </div>
 
-          {/* Mobile toggle */}
+          {/* Tablet: lang + burger */}
+          <div className="hidden lg:flex xl:hidden items-center gap-2 flex-shrink-0">
+            <div className="flex items-center border border-slate-200 overflow-hidden">
+              {languages.map((l, i) => (
+                <button
+                  key={l}
+                  onClick={() => setLang(l)}
+                  aria-label={`Switch language to ${l}`}
+                  aria-pressed={lang === l}
+                  className={`px-2 py-1.5 text-xs font-semibold transition-colors ${
+                    i < languages.length - 1 ? "border-r border-slate-200" : ""
+                  } ${lang === l ? "bg-green-600 text-white" : "text-slate-500 hover:bg-slate-50"}`}
+                >
+                  {l}
+                </button>
+              ))}
+            </div>
+            <button
+              className="p-2 text-slate-600"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+            >
+              {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+
+          {/* Mobile burger */}
           <button
-            className="md:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors"
+            className="lg:hidden p-2 text-slate-600"
             onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Menu"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
           >
             {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
+      </div>
 
-        {/* Mobile Menu */}
-        {menuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-100 py-3 space-y-1">
+      {/* Dropdown */}
+      {menuOpen && (
+        <div className="xl:hidden bg-white border-t border-slate-200">
+          <div className="max-w-7xl mx-auto px-6 py-2">
             {navLinks.map((link) => (
               <a
-                key={link.href}
+                key={link.label}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="block px-4 py-2.5 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg text-sm font-medium transition-colors"
+                className="block px-3 py-2.5 text-slate-600 hover:text-slate-900 hover:bg-slate-50 text-sm font-medium transition-colors"
               >
                 {link.label}
               </a>
             ))}
-            <div className="px-4 pt-2">
+            <div className="flex items-center gap-2 px-3 py-3 border-t border-slate-100 mt-1">
+              {languages.map((l) => (
+                <button
+                  key={l}
+                  onClick={() => setLang(l)}
+                  aria-label={`Switch language to ${l}`}
+                  aria-pressed={lang === l}
+                  className={`px-3 py-1.5 text-xs font-semibold border transition-colors ${
+                    lang === l
+                      ? "bg-green-600 text-white border-green-600"
+                      : "border-slate-200 text-slate-500 hover:bg-slate-50"
+                  }`}
+                >
+                  {l}
+                </button>
+              ))}
               <a
-                href="tel:+998330033033"
-                className="flex items-center justify-center gap-2 bg-emerald-600 text-white py-2.5 rounded-lg text-sm font-medium"
+                href="#contact"
+                onClick={() => setMenuOpen(false)}
+                className="ml-auto bg-green-600 hover:bg-green-700 text-white px-4 py-1.5 text-xs font-semibold transition-colors"
               >
-                <Phone className="w-4 h-4" />
-                +998 33-003-30-33
+                {t.nav.cta}
               </a>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </nav>
   );
 }
